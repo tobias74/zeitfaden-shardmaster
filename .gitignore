@@ -4,4 +4,6 @@ third_party/
 my_frameworks/
 frameworks/
 my-frameworks/
+*.ini
+
 
