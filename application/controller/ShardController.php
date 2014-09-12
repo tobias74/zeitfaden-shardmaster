@@ -20,6 +20,26 @@ class ShardController extends AbstractZeitfadenController
   {
     return $this->shardingServiceProvider->provide($val);
   }
+
+
+  public function getShardByIdAction()
+  {
+    $shardId = $this->_request->getParam('shardId','');
+    $applicationId = $this->_request->getParam('applicationId','');
+    
+    try
+    {
+      $shard = $this->getShardingService($applicationId)->getShardById($shardId);
+      $this->_response->appendValue('shard', $this->getDtoForShard($shard));
+      $this->_response->appendValue('status', 'ok');
+    }
+    catch (\BrokenPottery\NoMatchException $e)
+    {
+      $this->_response->appendValue('status', 'not_found');
+    }
+    
+    
+  }
   
   public function getShardForUserAction()
   {
